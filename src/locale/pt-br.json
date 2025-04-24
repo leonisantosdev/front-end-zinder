@@ -1,0 +1,13 @@
+{
+  "signin": {
+    "title": "Zinder TM",
+    "subtitle": "Digite suas credenciais para acessar sua conta.",
+    "email": "Email",
+    "password": "Senha",
+    "forgot": "Esqueceu a sua senha?",
+    "login": "Entrar",
+    "noAccount": "Não tem uma conta?",
+    "register": "Cadastre-se",
+    "placeholder": "seu@email.com"
+  }
+}
