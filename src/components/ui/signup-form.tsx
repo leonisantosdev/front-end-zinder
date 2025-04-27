@@ -4,29 +4,42 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useForm } from 'react-hook-form';
-import { useState } from "react";
 import { zodResolver } from '@hookform/resolvers/zod';
-import { createUserSchema } from "@/schemas/formSchema";
+import { RegisterData, UserSchema } from "@/schemas/formSchema";
+import { registerData } from "@/api/authClient";
+import { useNavigate } from "react-router-dom";
+import { toast } from 'sonner';
 
 export function SignUpForm({ className, ...props }: React.ComponentPropsWithoutRef<"div">) {
-  const [output, setOutput] = useState('');
-  const { register, handleSubmit, formState: { errors } } = useForm({
-    resolver: zodResolver(createUserSchema),
+  const navigate = useNavigate();
+  const { register, handleSubmit, formState: { errors } } = useForm<RegisterData>({
+    resolver: zodResolver(UserSchema),
   });
 
-  function createUser(data: object) {
-    setOutput(JSON.stringify(data, null, 2))
-  }
+    const onSubmit = async (data: RegisterData) => {
+      try {
+        const response = await registerData('/user/register', data);
+        const { token } = response.data;
+        console.log(token)
+        localStorage.setItem("token", token);
+        toast.success('Conta criada com sucesso!');
+
+        navigate("/verify-email");
+
+      } catch (error) {
+        alert("Erro ao regitrar conta: " + (error || "Erro desconhecido"));
+      }
+    };
 
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <Card className="[&_*_span]:text-red-500 [&_*_span]:text-xs [&_*_span]:mt-2">
+    <div className={cn("flex flex-col gap-6 ", className)} {...props}>
+      <Card className="[&_*_span]:text-red-500 [&_*_span]:text-xs [&_*_span]:mt-2 bg-transparent shadow-[0_0_15px_5px_rgba(255,255,255,0.02)]">
         <CardHeader>
           <CardTitle className="text-2xl text-center">Registrar conta</CardTitle>
         </CardHeader>
         <CardContent>
 
-          <form onSubmit={handleSubmit(createUser)}>
+          <form onSubmit={handleSubmit(onSubmit)}>
 
             <div className="flex flex-col gap-6">
 
@@ -66,8 +79,6 @@ export function SignUpForm({ className, ...props }: React.ComponentPropsWithoutR
             </div>
 
           </form>
-
-          <pre>{output}</pre>
         </CardContent>
       </Card>
     </div>

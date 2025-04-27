@@ -8,6 +8,8 @@ import { SignUp } from "./pages/SignUp.tsx";
 import "./lib/i18n.ts";
 import { Dashboard } from "./pages/Dashboard.tsx";
 import { PrivateRoute } from "./auth/PrivateRoute.tsx"
+import { Toaster } from 'sonner';
+import { AwaitVerification } from "./pages/AwaitVerification.tsx";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +31,12 @@ const router = createBrowserRouter([
         <Dashboard />
       </PrivateRoute>
     )
+  },
+  {
+    path: "/verify-email",
+    element: (
+      <AwaitVerification/>
+    )
   }
 ]);
 
@@ -36,6 +44,7 @@ createRoot(document.getElementById("root")!).render(
   <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
     <StrictMode>
       <RouterProvider router={router} />
+      <Toaster theme="dark" richColors position="top-right" duration={2000}/>
     </StrictMode>
   </ThemeProvider>
 );

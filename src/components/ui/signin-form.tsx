@@ -17,7 +17,8 @@ import { Moon } from 'lucide-react';
 import { LoginData, loginUserSchema } from "@/schemas/formSchema"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import axios from 'axios';
+import { loginData } from '../../api/authClient';
+import { Separator } from "@/components/ui/separator";
 
 export function SignInForm({ className, ...props }: React.ComponentPropsWithoutRef<"div">) {
   const navigate = useNavigate();
@@ -29,18 +30,14 @@ export function SignInForm({ className, ...props }: React.ComponentPropsWithoutR
 
   const onSubmit = async (data: LoginData) => {
     try {
-      const response = await axios.post('http://localhost:3333/user/login', data);
-      console.log(response.data);
-
+      const response = await loginData('/user/login', data);
       const { token } = response.data;
-      localStorage.setItem("token", token);
-
       console.log(token)
+      localStorage.setItem("token", token);
       navigate("/dashboard");
     } catch (error) {
 
       alert("Erro ao fazer login: " + (error || "Erro desconhecido"));
-      
     }
   };
 
@@ -91,7 +88,7 @@ export function SignInForm({ className, ...props }: React.ComponentPropsWithoutR
                 />
                 {errors.password && <span className="text-sm text-red-500">{errors.password.message}</span>}
               </div>
-
+              <Separator className="my-3" />
               <Button
                 type="submit"
                 className="w-full text-black bg-white hover:cursor-pointer hover:bg-gray-300 py-5"
