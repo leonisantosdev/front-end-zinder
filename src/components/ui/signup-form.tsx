@@ -1,86 +1,139 @@
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { RegisterData, UserSchema } from "@/schemas/formSchema";
+import { RegisterUserSchema, UserSchema } from "@/schemas/formSchema";
 import { registerData } from "@/api/authClient";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'sonner';
+import { TIME_TOAST } from "@/utils/timeToasts";
+import { useTranslation } from "react-i18next";
+import { AxiosError } from "axios";
+import { ChevronLeft, Loader2 } from "lucide-react";
+import { useState } from "react";
 
 export function SignUpForm({ className, ...props }: React.ComponentPropsWithoutRef<"div">) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
-  const { register, handleSubmit, formState: { errors } } = useForm<RegisterData>({
+  const [loading, setLoading] = useState(false);
+
+  const { register, handleSubmit, formState: { errors } } = useForm<RegisterUserSchema>({
     resolver: zodResolver(UserSchema),
   });
 
-    const onSubmit = async (data: RegisterData) => {
-      try {
-        const response = await registerData('/user/register', data);
-        const { token } = response.data;
-        console.log(token)
-        localStorage.setItem("token", token);
-        toast.success('Conta criada com sucesso!');
+  const onSubmit = async (data: RegisterUserSchema) => {
+    setLoading(true);
+    try {
+      const response = await registerData('/user/register', data);
+      const { token } = response.data;
 
-        navigate("/verify-email");
+      localStorage.setItem("token", token);
+      toast.success(response?.data?.message, {
+        duration: TIME_TOAST
+      });
 
-      } catch (error) {
-        alert("Erro ao regitrar conta: " + (error || "Erro desconhecido"));
-      }
-    };
+      sessionStorage.setItem("justRegistered", "true");
+      navigate("/await-verify-email");
+    } catch (error) {
+      const errorMessage = (error as AxiosError<{ message: string }>)?.response?.data?.message || "Erro ao cadastrar. Tente novamente.";
+      toast.error(`Erro: ${errorMessage}`, {
+        duration: TIME_TOAST
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <div className={cn("flex flex-col gap-6 ", className)} {...props}>
-      <Card className="[&_*_span]:text-red-500 [&_*_span]:text-xs [&_*_span]:mt-2 bg-transparent shadow-[0_0_15px_5px_rgba(255,255,255,0.02)]">
-        <CardHeader>
-          <CardTitle className="text-2xl text-center">Registrar conta</CardTitle>
+    <div className={cn("flex flex-col gap-6", className)} {...props}>
+      <Card className="bg-transparent shadow-[0_0_15px_5px_rgba(255,255,255,0.02)]">
+        <Button onClick={() => navigate('/login')} variant='outline' className='relative w-12 left-0 top-0 mx-3 bg-transparent cursor-pointer'><ChevronLeft/></Button>
+        <CardHeader className="flex flex-col gap-3 items-center">
+          <div className="flex flex-col gap-3 items-center">
+            <CardTitle className="text-3xl text-center py-2">{t('signup.title')}</CardTitle>
+          </div>
+          <CardDescription className="text-center">
+            {t('signup.subtitle')}
+          </CardDescription>
         </CardHeader>
+
         <CardContent>
-
           <form onSubmit={handleSubmit(onSubmit)}>
-
             <div className="flex flex-col gap-6">
-
-              <div className="grid">
-                <Label className="mb-4" htmlFor="name">Nome Completo</Label>
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="name">{t('signup.fullName')}</Label>
                 <Input
-                  placeholder="João Silva Gomes"
+                  placeholder={t('signup.fullNamePlaceholder')}
                   type="text"
                   {...register('name')}
                 />
-                {errors.name && <span>{errors.name.message}</span>}
+                {errors.name && <span className="text-sm text-red-500">{errors.name.message}</span>}
               </div>
 
-              <div className="grid">
-                <Label className="mb-4" htmlFor="email">Email</Label>
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="email">{t('signup.email')}</Label>
                 <Input
                   type="email"
-                  placeholder="seu@email.com"
+                  placeholder={t('signup.placeholderEmail')}
                   {...register('email')}
                 />
-                {errors.email && <span>{errors.email.message}</span>}
+                {errors.email && <span className="text-sm text-red-500">{errors.email.message}</span>}
               </div>
 
-              <div className="grid">
-                <Label className="mb-4" htmlFor="password">Senha</Label>
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="password">{t('signup.password')}</Label>
                 <Input 
-                type="password" 
-                placeholder="*****************"
-                {...register('password')}
+                  type="password" 
+                  placeholder="*****************"
+                  {...register('password')}
                 />
-                {errors.password && <span>{errors.password.message}</span>}
+                {errors.password && <span className="text-sm text-red-500">{errors.password.message}</span>}
               </div>
 
-              <Button type="submit" className="w-full text-black bg-white hover:cursor-pointer hover:bg-gray-300 text-center">
-                Registrar
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="confirmPassword">{t('signup.confirmPassword')}</Label>
+                <Input 
+                  type="password" 
+                  placeholder="*****************"
+                  {...register('confirmPassword')}
+                />
+                {errors.confirmPassword && <span className="text-sm text-red-500">{errors.confirmPassword.message}</span>}
+              </div>
+
+              <Button type="submit" disabled={loading} className="w-full hover:cursor-pointer text-center mt-5">
+                {loading ? (
+                  <div className="flex items-center justify-center gap-2">
+                    <Loader2 className="animate-spin h-4 w-4" />
+                    {t('signup.loading')}
+                  </div>
+                ) : (
+                  t('signup.register')
+                )}
               </Button>
             </div>
-
           </form>
         </CardContent>
+
+        <CardFooter className="mt-3 text-center text-sm flex justify-center items-center gap-1">
+          <div>
+            {t('signup.haveAccount')}{" "}
+            <a
+              onClick={() => navigate('/login')}
+              className="underline hover:cursor-pointer underline-offset-4 text-white hover:text-gray-400 ml-1"
+            >
+              {t('signup.login')}
+            </a>
+          </div>
+        </CardFooter>
       </Card>
+
+      <div className="text-balance text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 hover:[&_a]:text-primary  ">
+        {t('signin.terms.t1')} <a href="#">{t('signin.terms.t2')}</a>{" "}
+        {t('signin.terms.t3')} <a href="#">{t('signin.terms.t4')}</a>.
+      </div>
     </div>
   )
 }

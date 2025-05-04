@@ -13,9 +13,6 @@ export const registerData = async(route: string, data: object) => {
   }
 }
 
-// VERIFICAR EMAIL NA CRIAÇÃO DE CONTA
-
-
 // LOGAR NO SISTEMA
 export const loginData = async(route: string, data: object) => {
   try {

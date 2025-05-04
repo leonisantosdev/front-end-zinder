@@ -7,9 +7,13 @@ import { SignIn } from "./pages/SignIn.tsx";
 import { SignUp } from "./pages/SignUp.tsx";
 import "./lib/i18n.ts";
 import { Dashboard } from "./pages/Dashboard.tsx";
-import { PrivateRoute } from "./auth/PrivateRoute.tsx"
+import { PrivateRoute } from "./auth/PrivateRoute.tsx";
 import { Toaster } from 'sonner';
 import { AwaitVerification } from "./pages/AwaitVerification.tsx";
+import { VerificationRoute } from "./auth/VerificationRoute.tsx";
+import { ForgotPassword } from "./pages/ForgotPassword.tsx";
+import { ChangePassword } from "./pages/ChangePassword.tsx";
+import { EmailVerifiedSuccess } from "./pages/EmailVerifiedSuccess.tsx";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +29,10 @@ const router = createBrowserRouter([
     element: <SignUp />,
   },
   {
+    path: '/forgot-password',
+    element: <ForgotPassword />
+  },
+  {
     path: "/dashboard",
     element: (
       <PrivateRoute>
@@ -33,9 +41,23 @@ const router = createBrowserRouter([
     )
   },
   {
+    path: "/await-verify-email",
+    element: (
+      <VerificationRoute>
+        <AwaitVerification/>
+      </VerificationRoute>
+    )
+  },
+  {
+    path: "/change-password",
+    element: (
+      <ChangePassword />
+    )
+  },
+  {
     path: "/verify-email",
     element: (
-      <AwaitVerification/>
+      <EmailVerifiedSuccess />
     )
   }
 ]);

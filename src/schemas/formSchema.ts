@@ -1,15 +1,31 @@
 import { z } from 'zod';
 
-export const UserSchema = z.object({
-  name: z.string().nonempty('O nome é obrigatório').min(3, 'O nome dever conter no mínimo 3 caracteres'),
-  email: z.string().email('Formato de e-mail inválido').nonempty('O e-mail é obritório'),
-  password: z.string().nonempty('A senha é obrigatória').min(6, 'A senha deve conter no mínimo 6 caracteres')
-})
+// Primeiro, defina o schema base sem o refine
+const UserSchemaBase = z.object({
+  name: z.string().nonempty('O nome é obrigatório').min(3, 'O nome deve conter no mínimo 3 caracteres'),
+  email: z.string().email('Formato de e-mail inválido').nonempty('O e-mail é obrigatório'),
+  password: z.string().nonempty('A senha é obrigatória').min(8, 'A senha deve conter no mínimo 8 caracteres'),
+  confirmPassword: z.string().nonempty('A confirmação de senha é obrigatória').min(8, 'As senhas devem conter no mínimo 8 caracteres'),
+});
 
-export const loginUserSchema = UserSchema.pick({
+export const UserSchema = UserSchemaBase.refine(
+  (data) => data.password === data.confirmPassword,
+  {
+    message: 'As senhas não conferem',
+    path: ['confirmPassword'],
+  }
+);
+
+export const loginUserSchema = UserSchemaBase.pick({
   email: true,
-  password: true
+  password: true,
+});
+
+export const recoverPasswordSchema = UserSchemaBase.pick({
+  email: true,
 })
 
-export type LoginData = z.infer<typeof loginUserSchema>
-export type RegisterData = z.infer<typeof UserSchema>
+
+export type LoginUserSchema = z.infer<typeof loginUserSchema>;
+export type RegisterUserSchema = z.infer<typeof UserSchema>;
+export type RecoverPasswordSchema = z.infer<typeof recoverPasswordSchema>;

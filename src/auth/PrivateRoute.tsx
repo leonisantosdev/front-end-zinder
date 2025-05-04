@@ -12,7 +12,7 @@ interface JwtPayload {
 
 export function PrivateRoute({ children }: PrivateRouteProps) {
   const token = localStorage.getItem("token")
-  console.log(token)
+
   if (!token) {
     return <Navigate to="/login" replace />
   }

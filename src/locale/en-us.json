@@ -1,6 +1,6 @@
 {
   "signin": {
-    "title": "Zinder TM",
+    "title": "Login to your account",
     "subtitle": "Enter your credentials to access your account.",
     "email": "Email",
     "password": "Password",
@@ -8,6 +8,33 @@
     "login": "Login",
     "noAccount": "Don't have an account?",
     "register": "Sign Up",
-    "placeholder": "your@email.com"
+    "placeholder": "your@email.com",
+    "separator": "Zinder",
+    "terms": {
+      "t1": "By clicking continue, you agree to our",
+      "t2": "Terms of Service",
+      "t3": "and",
+      "t4": "Privacy Policy"
+    }
+  },
+  "signup": {
+    "title": "Register your account",
+    "subtitle": "Enter your credentials to create your account.",
+    "fullName": "Full Name",
+    "email": "Email",
+    "password": "Password",
+    "register": "Register",
+    "haveAccount": "Already have an account?",
+    "login": "Sign In",
+    "placeholderEmail": "example@gmail.com",
+    "fullNamePlaceholder": "John Smith",
+    "confirmPassword": "Confirm Password",
+    "loading": "Creating account...",
+    "terms": {
+      "t1": "By clicking continue, you agree to our",
+      "t2": "Terms of Service",
+      "t3": "and",
+      "t4": "Privacy Policy"
+    }
   }
 }

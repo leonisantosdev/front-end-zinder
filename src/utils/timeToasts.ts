@@ -1,0 +1,1 @@
+export const TIME_TOAST: number = 5000;
