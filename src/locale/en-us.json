@@ -26,7 +26,7 @@
     "register": "Register",
     "haveAccount": "Already have an account?",
     "login": "Sign In",
-    "placeholderEmail": "example@gmail.com",
+    "placeholderEmail": "your@gmail.com",
     "fullNamePlaceholder": "John Smith",
     "confirmPassword": "Confirm Password",
     "loading": "Creating account...",
@@ -36,5 +36,24 @@
       "t3": "and",
       "t4": "Privacy Policy"
     }
+  },
+  "forgotPassword": {
+    "title": "Enter your email to reset your password",
+    "alreadyHaveAccount": "Already have an account?",
+    "signin": "Sign In",
+    "or": "or",
+    "signup": "Sign Up",
+    "emailLabel": "Email",
+    "emailPlaceholder": "your@email.com",
+    "sending": "Sending...",
+    "send": "Send",
+    "terms": {
+      "t1": "By clicking continue, you agree to our",
+      "t2": "Terms of Service",
+      "t3": "and",
+      "t4": "Privacy Policy"
+    },
+    "error.default": "Error sending email. Please try again.",
+    "sucess": "Email sent successfully!"
   }
 }

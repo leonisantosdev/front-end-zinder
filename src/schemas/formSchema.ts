@@ -21,11 +21,17 @@ export const loginUserSchema = UserSchemaBase.pick({
   password: true,
 });
 
-export const recoverPasswordSchema = UserSchemaBase.pick({
+export const forgotPasswordSchema = UserSchemaBase.pick({
   email: true,
-})
+});
+
+export const forgotChangePasswordSchema = UserSchemaBase.pick({
+  password: true,
+  confirmPassword: true,
+});
 
 
 export type LoginUserSchema = z.infer<typeof loginUserSchema>;
 export type RegisterUserSchema = z.infer<typeof UserSchema>;
-export type RecoverPasswordSchema = z.infer<typeof recoverPasswordSchema>;
+export type ForgotPasswordSchema = z.infer<typeof forgotPasswordSchema>;
+export type ForgotChangePasswordSchema = z.infer<typeof forgotChangePasswordSchema>;

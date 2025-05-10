@@ -14,6 +14,7 @@ import { useTranslation } from "react-i18next";
 import { AxiosError } from "axios";
 import { ChevronLeft, Loader2 } from "lucide-react";
 import { useState } from "react";
+import { PasswordInput } from "../PasswordInput";
 
 export function SignUpForm({ className, ...props }: React.ComponentPropsWithoutRef<"div">) {
   const { t } = useTranslation();
@@ -53,7 +54,7 @@ export function SignUpForm({ className, ...props }: React.ComponentPropsWithoutR
         <Button onClick={() => navigate('/login')} variant='outline' className='relative w-12 left-0 top-0 mx-3 bg-transparent cursor-pointer'><ChevronLeft/></Button>
         <CardHeader className="flex flex-col gap-3 items-center">
           <div className="flex flex-col gap-3 items-center">
-            <CardTitle className="text-3xl text-center py-2">{t('signup.title')}</CardTitle>
+            <CardTitle className="text-3xl text-center">{t('signup.title')}</CardTitle>
           </div>
           <CardDescription className="text-center">
             {t('signup.subtitle')}
@@ -68,6 +69,7 @@ export function SignUpForm({ className, ...props }: React.ComponentPropsWithoutR
                 <Input
                   placeholder={t('signup.fullNamePlaceholder')}
                   type="text"
+                  className="py-5"
                   {...register('name')}
                 />
                 {errors.name && <span className="text-sm text-red-500">{errors.name.message}</span>}
@@ -78,6 +80,7 @@ export function SignUpForm({ className, ...props }: React.ComponentPropsWithoutR
                 <Input
                   type="email"
                   placeholder={t('signup.placeholderEmail')}
+                  className="py-5"
                   {...register('email')}
                 />
                 {errors.email && <span className="text-sm text-red-500">{errors.email.message}</span>}
@@ -85,8 +88,7 @@ export function SignUpForm({ className, ...props }: React.ComponentPropsWithoutR
 
               <div className="flex flex-col gap-2">
                 <Label htmlFor="password">{t('signup.password')}</Label>
-                <Input 
-                  type="password" 
+                <PasswordInput 
                   placeholder="*****************"
                   {...register('password')}
                 />
@@ -95,8 +97,7 @@ export function SignUpForm({ className, ...props }: React.ComponentPropsWithoutR
 
               <div className="flex flex-col gap-2">
                 <Label htmlFor="confirmPassword">{t('signup.confirmPassword')}</Label>
-                <Input 
-                  type="password" 
+                <PasswordInput
                   placeholder="*****************"
                   {...register('confirmPassword')}
                 />
@@ -117,7 +118,7 @@ export function SignUpForm({ className, ...props }: React.ComponentPropsWithoutR
           </form>
         </CardContent>
 
-        <CardFooter className="mt-3 text-center text-sm flex justify-center items-center gap-1">
+        <CardFooter className="text-center text-sm flex justify-center items-center gap-1">
           <div>
             {t('signup.haveAccount')}{" "}
             <a

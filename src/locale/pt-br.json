@@ -26,7 +26,7 @@
     "register": "Cadastrar",
     "haveAccount": "Já tem uma conta?",
     "login": "Entrar",
-    "placeholderEmail": "exemplo@gmail.com",
+    "placeholderEmail": "seu@gmail.com",
     "fullNamePlaceholder": "João Silva",
     "confirmPassword": "Confirmar Senha",
     "loading": "Criando conta...",
@@ -36,5 +36,24 @@
       "t3": "e",
       "t4": "Política de Privacidade"
     }
+  },
+  "forgotPassword": {
+    "title": "Digite seu e-mail para redefinir sua senha",
+    "alreadyHaveAccount": "Já tem uma conta?",
+    "signin": "Entrar",
+    "or": "ou",
+    "signup": "Cadastre-se",
+    "emailLabel": "Email",
+    "emailPlaceholder": "seu@email.com",
+    "sending": "Enviando...",
+    "send": "Enviar",
+    "terms": {
+      "t1": "Ao clicar em continuar, você concorda com nossos",
+      "t2": "Termos de Serviço",
+      "t3": "e",
+      "t4": "Política de Privacidade"
+    },
+    "error.default": "Erro ao enviar e-mail. Tente novamente.",
+    "sucess": "Email enviado com sucesso!"
   }
 }

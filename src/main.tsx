@@ -12,8 +12,9 @@ import { Toaster } from 'sonner';
 import { AwaitVerification } from "./pages/AwaitVerification.tsx";
 import { VerificationRoute } from "./auth/VerificationRoute.tsx";
 import { ForgotPassword } from "./pages/ForgotPassword.tsx";
-import { ChangePassword } from "./pages/ChangePassword.tsx";
-import { EmailVerifiedSuccess } from "./pages/EmailVerifiedSuccess.tsx";
+import { ForgotChangePassword } from "./pages/ForgotChangePassword.tsx";
+import { PasswordResetRoute } from "./auth/PasswordResetRoute.tsx";
+// import { EmailVerifiedSuccess } from "./pages/EmailVerifiedSuccess.tsx";
 
 const router = createBrowserRouter([
   {
@@ -49,17 +50,19 @@ const router = createBrowserRouter([
     )
   },
   {
-    path: "/change-password",
+    path: "/forgot-change-password",
     element: (
-      <ChangePassword />
+      <PasswordResetRoute>
+        <ForgotChangePassword />
+      </PasswordResetRoute>
     )
   },
-  {
-    path: "/verify-email",
-    element: (
-      <EmailVerifiedSuccess />
-    )
-  }
+  // {
+  //   path: "/verify-email",
+  //   element: (
+  //     <EmailVerifiedSuccess />
+  //   )
+  // }
 ]);
 
 createRoot(document.getElementById("root")!).render(

@@ -11,7 +11,7 @@ export const registerData = async(route: string, data: object) => {
     console.error('Erro na requisição:', error);
     throw error;
   }
-}
+};
 
 // LOGAR NO SISTEMA
 export const loginData = async(route: string, data: object) => {
@@ -22,4 +22,4 @@ export const loginData = async(route: string, data: object) => {
     console.error('Erro na requisição:', error);
     throw error;
   }
-}
+};
