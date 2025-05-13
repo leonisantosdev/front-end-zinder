@@ -55,5 +55,8 @@
     },
     "error.default": "Erro ao enviar e-mail. Tente novamente.",
     "sucess": "Email enviado com sucesso!"
+  },
+  "forgotPasswordChange": {
+    
   }
 }

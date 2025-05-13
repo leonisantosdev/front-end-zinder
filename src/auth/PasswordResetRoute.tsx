@@ -4,7 +4,6 @@ import { Navigate, useLocation } from "react-router-dom"
 import { Loader } from "lucide-react"
 import { validateChangePasswordRouteToken } from "@/api/authTokens"
 import { toast } from "sonner"
-import { TIME_TOAST } from "@/utils/timeToasts"
 import { AxiosError } from "axios"
 
 export function PasswordResetRoute({ children }: { children: JSX.Element }) {
@@ -31,9 +30,7 @@ export function PasswordResetRoute({ children }: { children: JSX.Element }) {
       .catch((error) => {
         const errorMessage = (error as AxiosError<{ message: string }>)?.response?.data.message
 
-        toast.error(`Erro: ${errorMessage}`, {
-          duration: TIME_TOAST
-        });
+        toast.error(`Erro: ${errorMessage}`);
 
         setIsValid(false)
       })

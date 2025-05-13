@@ -1,4 +1,4 @@
-import { ButtonTranslate } from '@/components/ButtonTranslate';
+// import { ButtonTranslate } from '@/components/ButtonTranslate';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -44,7 +44,7 @@ export function AwaitVerification() {
           Você será redirecionado para o login após o tempo expirar.
         </p>
       </div>
-      <ButtonTranslate />
+      {/* <ButtonTranslate /> */}
     </div>
   );
 }

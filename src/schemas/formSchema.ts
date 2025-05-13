@@ -16,6 +16,7 @@ export const UserSchema = UserSchemaBase.refine(
   }
 );
 
+
 export const loginUserSchema = UserSchemaBase.pick({
   email: true,
   password: true,
@@ -28,6 +29,9 @@ export const forgotPasswordSchema = UserSchemaBase.pick({
 export const forgotChangePasswordSchema = UserSchemaBase.pick({
   password: true,
   confirmPassword: true,
+}).refine((data) => data.password === data.confirmPassword, {
+  message: 'As senhas não conferem',
+  path: ['confirmPassword'],
 });
 
 

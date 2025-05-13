@@ -1,4 +1,4 @@
-import { ButtonTranslate } from '@/components/ButtonTranslate'
+// import { ButtonTranslate } from '@/components/ButtonTranslate'
 import { ForgotPasswordForm } from '@/components/forgot-password-form'
 
 export const ForgotPassword = () => {
@@ -7,7 +7,7 @@ export const ForgotPassword = () => {
       <div className="w-full max-w-sm">
         <ForgotPasswordForm />
       </div>
-      <ButtonTranslate/>
+      {/* <ButtonTranslate/> */}
     </div>
   )
 }

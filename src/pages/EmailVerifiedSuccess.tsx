@@ -1,4 +1,4 @@
-import { ButtonTranslate } from '@/components/ButtonTranslate';
+// import { ButtonTranslate } from '@/components/ButtonTranslate';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -40,7 +40,7 @@ export function EmailVerifiedSuccess() {
           Você será redirecionado para a página de login.
         </p>
       </div>
-      <ButtonTranslate />
+      {/* <ButtonTranslate /> */}
     </div>
   );
 }

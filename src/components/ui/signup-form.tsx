@@ -9,7 +9,6 @@ import { RegisterUserSchema, UserSchema } from "@/schemas/formSchema";
 import { registerData } from "@/api/authClient";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'sonner';
-import { TIME_TOAST } from "@/utils/timeToasts";
 import { useTranslation } from "react-i18next";
 import { AxiosError } from "axios";
 import { ChevronLeft, Loader2 } from "lucide-react";
@@ -32,17 +31,13 @@ export function SignUpForm({ className, ...props }: React.ComponentPropsWithoutR
       const { token } = response.data;
 
       localStorage.setItem("token", token);
-      toast.success(response?.data?.message, {
-        duration: TIME_TOAST
-      });
+      toast.success(response?.data?.message);
 
       sessionStorage.setItem("justRegistered", "true");
       navigate("/await-verify-email");
     } catch (error) {
       const errorMessage = (error as AxiosError<{ message: string }>)?.response?.data?.message || "Erro ao cadastrar. Tente novamente.";
-      toast.error(`Erro: ${errorMessage}`, {
-        duration: TIME_TOAST
-      });
+      toast.error(`Erro: ${errorMessage}`);
     } finally {
       setLoading(false);
     }

@@ -20,7 +20,6 @@ import { loginData } from '../../api/authClient'
 import { Separator } from "@/components/ui/separator"
 import { AxiosError } from "axios"
 import { toast } from "sonner"
-import { TIME_TOAST } from "@/utils/timeToasts"
 import { PasswordInput } from "@/components/PasswordInput"
 import { useEffect } from "react"
 
@@ -39,9 +38,7 @@ export function SignInForm({ className, ...props }: React.ComponentPropsWithoutR
   
     if (emailVerified === "true") {
       setTimeout(() => {
-        toast.success("E-mail verificado com sucesso!", {
-          duration: TIME_TOAST,
-        });
+        toast.success("E-mail verificado com sucesso!");
       }, 300);
   
       queryParams.delete("emailVerified");
@@ -62,9 +59,7 @@ export function SignInForm({ className, ...props }: React.ComponentPropsWithoutR
     } catch (error) {
       const errorMessage = (error as AxiosError<{ message: string }>)?.response?.data?.message || "Erro ao fazer login. Tente novamente."
 
-      toast.error(`Erro: ${errorMessage}`, {
-        duration: TIME_TOAST
-      })
+      toast.error(`Erro: ${errorMessage}`)
     }
   }
 

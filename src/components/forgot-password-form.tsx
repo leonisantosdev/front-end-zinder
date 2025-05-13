@@ -9,12 +9,12 @@ import { useForm } from "react-hook-form"
 import { ForgotPasswordSchema, forgotPasswordSchema } from "@/schemas/formSchema"
 import { AxiosError } from "axios"
 import { toast } from "sonner"
-import { TIME_TOAST } from "@/utils/timeToasts"
 import { sendEmailForgotPassword } from "@/api/userClient"
 import { useState } from "react"
 import { useTranslation } from "react-i18next"
 
 export function ForgotPasswordForm({ className, ...props }: React.ComponentProps<"div">) {
+
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -27,19 +27,16 @@ export function ForgotPasswordForm({ className, ...props }: React.ComponentProps
     setLoading(true);
 
     try {
+
       const response = await sendEmailForgotPassword('/user/send-email-forgot-password', data)
 
-      toast.success(response?.data?.message, {
-        duration: TIME_TOAST
-      });
+      toast.success(response?.data?.message);
 
       navigate('/login');
     } catch (error) {
       const errorMessage = (error as AxiosError<{ message: string }>)?.response?.data?.message || "Erro ao fazer login. Tente novamente.";
 
-      toast.error(`Erro: ${errorMessage}`, {
-        duration: TIME_TOAST
-      });
+      toast.error(`Erro: ${errorMessage}`);
     } finally {
       setLoading(false);
     }

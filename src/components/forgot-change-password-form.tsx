@@ -15,11 +15,16 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { AxiosError } from "axios"
 import { toast } from "sonner"
-import { TIME_TOAST } from "@/utils/timeToasts"
 import { PasswordInput } from "@/components/PasswordInput"
 import { forgotChangePassword } from "@/api/userClient"
+import { useLocation } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 export function ForgotChangePasswordForm({ className, ...props }: React.ComponentPropsWithoutRef<"div">) {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const token = params.get("token");
   const { t } = useTranslation();
 
   const { register, handleSubmit, formState: { errors } } = useForm<ForgotChangePasswordSchema>({
@@ -28,21 +33,22 @@ export function ForgotChangePasswordForm({ className, ...props }: React.Componen
 
   const onSubmit = async (data: ForgotChangePasswordSchema) => {
     try {
-      const response = await forgotChangePassword('/user/forgot-change-password', data);
+      const payload = { ...data, token };
+      console.log(data.password, token)
+
+      const response = await forgotChangePassword('/user/forgot-change-password', payload);
 
       if(response.status === 200) {
         setTimeout(() => {
-          toast.success("Senha redefinida com sucesso!", {
-            duration: TIME_TOAST,
-          });
+          toast.success(response?.data?.message);
         }, 300);
       };
+
+      navigate('/login');
     } catch (error) {
       const errorMessage = (error as AxiosError<{ message: string }>)?.response?.data?.message
 
-      toast.error(`Erro: ${errorMessage}`, {
-        duration: TIME_TOAST
-      })
+      toast.error(`Erro: ${errorMessage}`)
     }
   }
 
@@ -50,7 +56,7 @@ export function ForgotChangePasswordForm({ className, ...props }: React.Componen
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card className="py-10 bg-transparent shadow-[0_0_15px_5px_rgba(255,255,255,0.02)]">
         <CardHeader className="flex flex-col gap-3 items-center">
-          <CardTitle className="text-3xl text-center py-2">{t('Digite a nova senha')}</CardTitle>
+          <CardTitle className="text-3xl text-center py-2">{t('Redefinição de senha')}</CardTitle>
           <CardDescription className="text-center">
             {t('Digite sua nova senha para redefinir suas credenciais')}
           </CardDescription>
@@ -81,7 +87,7 @@ export function ForgotChangePasswordForm({ className, ...props }: React.Componen
 
               <Button
                 variant="default"
-                type="submit"
+                type="submit" 
                 className="w-full hover:cursor-pointer py-5"
               >
                 {t('Redefinir')}

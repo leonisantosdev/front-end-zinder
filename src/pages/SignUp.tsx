@@ -1,4 +1,4 @@
-import { ButtonTranslate } from '@/components/ButtonTranslate'
+// import { ButtonTranslate } from '@/components/ButtonTranslate'
 // import { Button } from '@/components/ui/button'
 import { SignUpForm } from '@/components/ui/signup-form'
 // import { ChevronLeft } from 'lucide-react'
@@ -12,7 +12,7 @@ export const SignUp = () => {
       <div className="w-full max-w-md">
         <SignUpForm/>
       </div>
-      <ButtonTranslate/>
+      {/* <ButtonTranslate/> */}
     </div>
   )
 }
