@@ -1,9 +1,9 @@
-import { SignIn } from "./pages/SignIn";
+import { SignIn } from './pages/SignIn';
 
 export function App() {
   return (
     <>
-      <SignIn/>
+      <SignIn />
     </>
-  )
+  );
 }

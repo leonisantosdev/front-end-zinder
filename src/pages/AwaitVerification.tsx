@@ -9,12 +9,12 @@ export function AwaitVerification() {
   const [seconds, setSeconds] = useState(10);
 
   useEffect(() => {
-    sessionStorage.removeItem("justRegistered"); 
+    sessionStorage.removeItem('justRegistered');
   }, []);
 
   useEffect(() => {
     const countdown = setInterval(() => {
-      setSeconds(prev => {
+      setSeconds((prev) => {
         if (prev <= 1) {
           clearInterval(countdown);
           navigate('/login');
@@ -29,17 +29,21 @@ export function AwaitVerification() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen text-[#fff]">
-      <Button onClick={() => navigate('/login')} variant='outline' className='absolute left-0 top-0 mt-5 ml-2 bg-transparent cursor-pointer'>
+      <Button
+        onClick={() => navigate('/login')}
+        variant="outline"
+        className="absolute left-0 top-0 mt-5 ml-2 bg-transparent cursor-pointer"
+      >
         <ChevronLeft />
       </Button>
       <div className="rounded-2xl p-8 max-w-md w-full text-center ">
-        <h1 className="text-3xl font-bold mb-8 text-[#fff]">Verifique seu e-mail</h1>
+        <h1 className="text-3xl font-bold mb-8 text-[#fff]">
+          Verifique seu e-mail
+        </h1>
         <p className="mb-6 text-md text-[#fff]">
-          Um link de verificação foi enviado para seu e-mail. 
+          Um link de verificação foi enviado para seu e-mail.
         </p>
-        <div className="text-7xl font-bold my-8 text-[#fff]">
-          {seconds}s
-        </div>
+        <div className="text-7xl font-bold my-8 text-[#fff]">{seconds}s</div>
         <p className="mt-4 text-sm text-[#fff]">
           Você será redirecionado para o login após o tempo expirar.
         </p>

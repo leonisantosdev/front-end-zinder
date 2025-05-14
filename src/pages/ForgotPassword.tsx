@@ -1,5 +1,4 @@
-// import { ButtonTranslate } from '@/components/ButtonTranslate'
-import { ForgotPasswordForm } from '@/components/forgot-password-form'
+import { ForgotPasswordForm } from '@/components/forgot-password-form';
 
 export const ForgotPassword = () => {
   return (
@@ -7,7 +6,6 @@ export const ForgotPassword = () => {
       <div className="w-full max-w-sm">
         <ForgotPasswordForm />
       </div>
-      {/* <ButtonTranslate/> */}
     </div>
-  )
-}
+  );
+};

@@ -1,5 +1,4 @@
-// import { ButtonTranslate } from "@/components/ButtonTranslate";
-import { SignInForm } from "@/components/ui/signin-form";
+import { SignInForm } from '@/components/ui/signin-form';
 
 export const SignIn = () => {
   return (
@@ -7,7 +6,6 @@ export const SignIn = () => {
       <div className="w-full max-w-md">
         <SignInForm />
       </div>
-    {/* <ButtonTranslate/> */}
     </div>
   );
 };

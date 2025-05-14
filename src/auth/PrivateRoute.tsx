@@ -1,34 +1,34 @@
-import { Navigate } from "react-router-dom"
-import { ReactNode } from "react"
-import { jwtDecode } from "jwt-decode"
+import { Navigate } from 'react-router-dom';
+import { ReactNode } from 'react';
+import { jwtDecode } from 'jwt-decode';
 
 interface PrivateRouteProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
 interface JwtPayload {
-  exp: number
+  exp: number;
 }
 
 export function PrivateRoute({ children }: PrivateRouteProps) {
-  const token = localStorage.getItem("token")
+  const token = localStorage.getItem('token');
 
   if (!token) {
-    return <Navigate to="/login" replace />
+    return <Navigate to="/login" replace />;
   }
 
   try {
-    const decoded = jwtDecode<JwtPayload>(token)
-    const isExpired = decoded.exp * 1000 < Date.now()
+    const decoded = jwtDecode<JwtPayload>(token);
+    const isExpired = decoded.exp * 1000 < Date.now();
 
     if (isExpired) {
-      localStorage.removeItem("token")
-      return <Navigate to="/login" replace />
+      localStorage.removeItem('token');
+      return <Navigate to="/login" replace />;
     }
 
-    return children
+    return children;
   } catch {
-    localStorage.removeItem("token")
-    return <Navigate to="/login" replace />
+    localStorage.removeItem('token');
+    return <Navigate to="/login" replace />;
   }
 }

@@ -15,9 +15,15 @@ export const sendEmailForgotPassword = async (route: string, data: object) => {
 };
 
 // Envia a nova senha para rota do back-end para redefinir a senha.
-export const forgotChangePassword = async (route: string, datasForChangePassword: object) => {
+export const forgotChangePassword = async (
+  route: string,
+  datasForChangePassword: object
+) => {
   try {
-    const response = await axios.patch(`${API_URL}${route}`, datasForChangePassword);
+    const response = await axios.patch(
+      `${API_URL}${route}`,
+      datasForChangePassword
+    );
 
     return response;
   } catch (error) {
