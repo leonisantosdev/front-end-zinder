@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3333';
+const API_URL = 'https://apizinder.up.railway.app';
 
 // Enviar e-mail para redefinir senha
 export const sendEmailForgotPassword = async (route: string, data: object) => {
