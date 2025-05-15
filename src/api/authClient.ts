@@ -1,6 +1,5 @@
 import axios from 'axios';
-
-const API_URL = 'https://apizinder.up.railway.app';
+import { API_URL } from './config/urls.js';
 
 // REGISTRAR NO SISTEMA
 export const registerData = async (route: string, data: object) => {

@@ -1,6 +1,5 @@
 import axios from 'axios';
-
-const API_URL = 'https://apizinder.up.railway.app';
+import { API_URL } from './config/urls.js';
 
 // Enviar e-mail para redefinir senha
 export const sendEmailForgotPassword = async (route: string, data: object) => {

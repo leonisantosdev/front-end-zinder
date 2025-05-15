@@ -1,6 +1,5 @@
 import axios from 'axios';
-
-const API_URL = 'https://apizinder.up.railway.app';
+import { API_URL } from './config/urls.js';
 
 // Valida rota de redefinição de senha do usuário (ROTA PRIVADA)
 export const validateChangePasswordRouteToken = async (
