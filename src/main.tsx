@@ -14,6 +14,7 @@ import { VerificationRoute } from './auth/VerificationRoute.tsx';
 import { ForgotPassword } from './pages/ForgotPassword.tsx';
 import { ForgotChangePassword } from './pages/ForgotChangePassword.tsx';
 import { PasswordResetRoute } from './auth/PasswordResetRoute.tsx';
+import { UserProfile } from './pages/UserProfile.tsx';
 
 const router = createBrowserRouter([
   {
@@ -56,6 +57,14 @@ const router = createBrowserRouter([
       </PasswordResetRoute>
     ),
   },
+  {
+    path: '/profile',
+    element: (
+      <PrivateRoute>
+          <UserProfile/>
+      </PrivateRoute>
+    )
+  }
 ]);
 
 createRoot(document.getElementById('root')!).render(

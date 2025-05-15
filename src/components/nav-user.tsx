@@ -22,16 +22,39 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar';
+import { useEffect, useState } from 'react';
+import { getUserDatas } from '@/api/services/user.service';
+import { getTokenClient } from '@/utils/getTokenClient';
+import { UserDataProfile } from '@/api/types/user';
+import { useNavigate } from 'react-router-dom';
 
-export function NavUser({
-  user,
-}: {
-  user: {
-    name: string;
-    email: string;
-    avatar: string;
-  };
-}) {
+export function NavUser() {
+  const navigate = useNavigate();
+  const [user, setUser] = useState<UserDataProfile | null>(null);
+
+  useEffect(() => {
+    const getUser = async () => {
+      const token = getTokenClient();
+
+      if (!token) throw new Error('Usuário não autenticado.');
+
+      try {
+        const response = await getUserDatas('/user/profile', token);
+        setUser(response.data);
+      } catch (error) {
+        console.error('Erro ao buscar usuário', error);
+      }
+    };
+
+    getUser();
+  }, []);
+
+  function logout() {
+    localStorage.removeItem('token');
+    setUser(null);
+    navigate('/login');
+  }
+
   const { isMobile } = useSidebar();
 
   return (
@@ -41,16 +64,16 @@ export function NavUser({
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground hover:cursor-pointer"
             >
               <Avatar className="h-8 w-8 rounded-lg grayscale">
-                <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                <AvatarImage src={'user.avatar'} alt={'user.name'} />
+                <AvatarFallback className="rounded-lg">ZN</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{user.name}</span>
+                <span className="truncate font-medium">{user?.name}</span>
                 <span className="text-muted-foreground truncate text-xs">
-                  {user.email}
+                  {user?.email}
                 </span>
               </div>
               <IconDotsVertical className="ml-auto size-4" />
@@ -65,38 +88,39 @@ export function NavUser({
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                  <AvatarImage
+                    src={user?.profilePictureUrl || ''}
+                    alt={user?.name}
+                  />
+                  <AvatarFallback className="rounded-lg">ZN</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">
-                    nome de usuario aqui
-                  </span>
+                  <span className="truncate font-medium">{user?.username}</span>
                   <span className="text-muted-foreground truncate text-xs">
-                    colocar email aqui
+                    {user?.email}
                   </span>
                 </div>
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => navigate('/profile')} className="hover:cursor-pointer">
                 <IconUserCircle />
-                Account
+                Perfil
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <IconCreditCard />
-                Billing
+                Configurações
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <IconNotification />
-                Notifications
+                Notificações
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={logout} className="hover:cursor-pointer">
               <IconLogout />
-              Log out
+              Sair
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

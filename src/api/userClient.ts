@@ -19,13 +19,11 @@ export const forgotChangePassword = async (
   datasForChangePassword: object
 ) => {
   try {
-    const response = await axios.patch(
-      `${API_URL}${route}`,
-      datasForChangePassword
-    );
+    const response = await axios.patch(`${API_URL}${route}`, datasForChangePassword);
 
     return response;
   } catch (error) {
+    
     console.error('Erro na requisição:', error);
     throw error;
   }
